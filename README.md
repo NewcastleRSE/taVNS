@@ -1,30 +1,50 @@
-# Standard Project
-A template repo for the standard RSE project
+# taVNS (Transcranial Auricular Vagus Nerve Stimulation) CloseNIT Pilot Project
+
 
 ## About
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sollicitudin ante at eleifend eleifend. Sed non vestibulum nisi. Aliquam vel condimentum quam. Donec fringilla et purus at auctor. Praesent euismod vitae metus non consectetur. Sed interdum aliquet nisl at efficitur. Nulla urna quam, gravida eget elementum eget, mattis nec tortor. Fusce ut neque tellus. Integer at magna feugiat lacus porta posuere eget vitae metus.
-
-Curabitur a tempus arcu. Maecenas blandit risus quam, quis convallis justo pretium in. Suspendisse rutrum, elit at venenatis cursus, dolor ligula iaculis dui, ut dignissim enim justo at ligula. Donec interdum dignissim egestas. Nullam nec ultrices enim. Nam quis arcu tincidunt, auctor purus sit amet, aliquam libero. Fusce rhoncus lectus ac imperdiet varius. Sed gravida urna eros, ac luctus justo condimentum nec. Integer ultrices nibh in neque sagittis, at pretium erat pretium. Praesent feugiat purus id iaculis laoreet. Proin in tellus tristique, congue ante in, sodales quam. Sed imperdiet est tortor, eget vestibulum tortor pulvinar volutpat. In et pretium nisl.
+Co-morbid depression is common in people with heart failure (HF) and leads to worse health
+outcomes. Autonomic nervous system (ANS) dysregulation, as indexed by reduced heart rate
+variability (HRV), is seen in depression and HF. We hypothesise that ANS dysregulation is
+mechanistically involved in depression in HF patients, explaining the poor prognosis. Implanted
+vagus nerve stimulation (VNS) directly targets the ANS. It is used clinically in depression and
+experimentally in HF, consistently improving quality of life (QoL). Transauricular VNS (taVNS) is a
+non-invasive alternative. It holds promise but optimal stimulation parameters are not known. Our
+collaboration has demonstrated the feasibility of open-loop taVNS and identified parameter-
+specific effects on the HRV of healthy volunteers. The respiratory cycle is relevant for the effects
+of taVNS on ANS modulation. We propose a proof-of-concept study to develop lab-based closed-
+loop taVNS techniques, gated to trigger stimulation at specific points in the respiratory cycle of
+healthy volunteers, to determine ANS impact on measures of electroencephalography (EEG), HRV,
+blood pressure and continuous performance tests. In parallel we are studying ANS function,
+mood, fatigue and QoL in people with depression and HF. Non-invasive ANS modulation is a potential novel therapeutic strategy targeting mood, fatigue and QoL in HF.
 
 ### Project Team
-Dr L. Ipsum, Newcastle University  ([lorem.ipsum@newcastle.ac.uk](mailto:lorem.ipsum@newcastle.ac.uk))  
-Professor D. Sit Amet, XY University  ([d.sit.amet@newcastle.ac.uk](mailto:d.sit.amet@example.com))  
+Dr Jannetta Steyn, Newcastle University  ([jannetta.steyn@newcastle.ac.uk](mailto:jannetta.steyn@newcastle.ac.uk))  
+Dr Frances Turner, Newcastle University  ([frances.hutchings@newcastle.ac.uk](mailto:frances.hutchings@newcastle.ac.uk)) 
+Dr. Tiago da Silva Costa, Newcastle University ([tiago.da-silva-costa@newcastle.ac.uk](mailto:tiago.da-silva-costa@newcastle.ac.uk))
 
-### RSE Contact
-C. Adipiscing  
+### RSE Contacts
+Frances & Jannetta  
 RSE Team  
 Newcastle University  
-([consectetur.adpiscing@newcastle.ac.uk](mailto:consectetur.adpiscing@newcastle.ac.uk))  
+([frances.hutchings@newcastle.ac.uk](mailto:frances.hutchings@newcastle.ac.uk))  
+([jannetta.steyn@newcastle.ac.uk](mailto:jannetta.steyn@newcastle.ac.uk))  
 
-## Built With
+## Built With (Hardware)
+DS8 Digitimer 
+National Instruments USB-6229
 
+Testing:
+Oscillascope
+Signal Generator
+
+
+## Built With (Software)
 This section is intended to list the frameworks and tools you're using to develop this software. Please link to the home page or documentatation in each case.
 
 [Framework 1](https://something.com)  
 [Framework 2](https://something.com)  
 [Framework 3](https://something.com)  
-
 ## Getting Started
 
 ### Prerequisites
