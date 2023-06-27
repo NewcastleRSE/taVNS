@@ -40,10 +40,9 @@ Signal Generator
 
 
 ## Built With (Software)
-This section is intended to list the frameworks and tools you're using to develop this software. Please link to the home page or documentatation in each case.
 
-[Framework 1](https://something.com)  
-[Framework 2](https://something.com)  
+Using code from the CCS-Lab DS8R\_python repository (https://github.com/CCS-Lab/DS8R\_python)
+
 [Framework 3](https://something.com)  
 ## Getting Started
 
