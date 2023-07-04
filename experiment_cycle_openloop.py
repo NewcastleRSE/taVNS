@@ -1,6 +1,7 @@
 import time
 
 from ds8r import DS8R
+from nclstim import stim_fun
 
 
 # For taVNS Tiago asked for 100-300ms pulse width, 5-20Hz, 2-20ma
@@ -39,12 +40,10 @@ from ds8r import DS8R
 duty_cyle_on    = 10    # seconds
 duty_cycle_off  = 20
 experiment_time = 2     # minutes
-
-
+freq            = 10    # Hz, cycles per second
 # Typical duty cycles have 30–60 s "on" periods and 
 # 60–120 s "off" periods, or 20–50% duty cycles.
-Hz    = 10 # cycles per second
-trest = 1/Hz  # convert to a time delay between pulses (this does assume short pulse widths)
+
 
 ## Set up stimulation protocol for single pulse
 # loop for duty_cycle number of seconds
@@ -59,10 +58,7 @@ experiment_end = time.time() + 60*5  # end experiment 5 mins from now
 
 while time.time() < experiment_end:
     print('On cycle')
-    oncyc_end = time.time() + duty_cyle_on
-    while time.time() < oncyc_end:
-        stim.run()
-        time.sleep(trest)
+    stim_fun(stim, duty_cyle_on, freq)
     print('Off cycle')
     time.sleep(duty_cycle_off)
 print('Experiment ended')
