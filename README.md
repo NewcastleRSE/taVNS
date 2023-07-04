@@ -1,5 +1,5 @@
 # taVNS CloseNIT Pilot Project
-(transcranial auricular Vagus Nerve Stimulation)
+(transcutaneous auricular Vagus Nerve Stimulation)
 
 ## About
 
