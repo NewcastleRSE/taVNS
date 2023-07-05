@@ -3,6 +3,7 @@
 # FT and JS 2023
 import time
 
+
 def stim_fun(stim, duty_cyle_on=1, freq=10):
     '''
     A simple stimulation function, 
@@ -16,6 +17,9 @@ def stim_fun(stim, duty_cyle_on=1, freq=10):
         time.sleep(trest)
 
 
+
 # add a function for parsing the input from the breathing belt?
+
+# add function for finding the change in delta y windowed?
 
 # add a function for gathering the GUI inputs?
