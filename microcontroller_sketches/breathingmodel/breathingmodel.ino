@@ -22,6 +22,9 @@ void loop() {
   dacWrite(DAC_CH1, dacout);
   Serial.println(dacout);
   t += 0.1;
+  if (t > 5) {
+    t = 0;
+  }
   delay(100);
 }
 
