@@ -9,6 +9,8 @@ RESOLUTION = 100
 plt.ion()
 t = 0
 while True:
+    if t > 5:
+        t = 0
     x = [t + v * FREQUENCY / RESOLUTION for v in range(RESOLUTION)]
     y = list(map(b.twocomplinear, x))
     print(t,x,y)
