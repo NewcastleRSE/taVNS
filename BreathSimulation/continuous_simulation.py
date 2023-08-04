@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from math import sin
 import breathingmodel.breathingmodel as b
 
 DELAY = 0.5

@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import breathingmodel.breathingmodel as b
+import breathingmodel as b
 
 t = 0
 x = []

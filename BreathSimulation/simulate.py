@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import breathingmodel.breathingmodel as b
+import breathingmodel as b
 
 x = []
 for i in range(100):
