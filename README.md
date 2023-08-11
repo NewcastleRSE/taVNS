@@ -48,11 +48,20 @@ Using code from the CCS-Lab DS8R\_python repository (https://github.com/CCS-Lab/
 
 ### Prerequisites
 
-Any tools or versions of languages needed to run code. For example specific Python or Node versions. Minimum hardware requirements also go here.
+- Digistim DS8R
+- AD Instruments PowerLab 4/26
+- NI USB6229
+- An oscilloscope would be handy
+- An ESP32 microcontroller for running the breathing simulator would be handy
 
 ### Installation
 
-How to build or install the applcation.
+Install the DS8R package:
+```
+# Install from GitHub
+pip install -e git+https://github.com/CCS-Lab/DS8R_python#egg=ds8r
+```
+
 
 ### Running Locally
 

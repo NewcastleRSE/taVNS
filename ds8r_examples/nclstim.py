@@ -1,4 +1,4 @@
-# A module file to use for our custom ds8r functions 
+# A module file to use for our custom ds8r_examples functions
 # for the closeNIT taVNS project.
 # FT and JS 2023
 import time

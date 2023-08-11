@@ -1,6 +1,6 @@
 import time
 
-from ds8r import DS8R
+from ds8r.ds8r import DS8R
 from nclstim import stim_fun
 import breathingmodel.breathingmodel as b
 import matplotlib.pyplot as plt
