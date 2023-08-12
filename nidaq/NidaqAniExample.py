@@ -4,6 +4,7 @@ from matplotlib.animation import FuncAnimation
 import nidaqmx
 import time
 
+channel = "Dev1/ai1"
 fig, ax = plt.subplots()
 global ydata
 global xdata
@@ -20,6 +21,7 @@ def init():
 
 
 def update(frame):
+    global in_stream
     if frame>10:
         ax.set_xlim(0,frame+1)
         xdata.append(frame)
@@ -30,7 +32,7 @@ def update(frame):
     return ln,
 
 with nidaqmx.Task() as task:
-    task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
+    task.ai_channels.add_ai_voltage_chan(channel)
     in_stream = task.in_stream
     ani = FuncAnimation(fig, update, frames=60, init_func=init, blit=True)
     plt.show()
