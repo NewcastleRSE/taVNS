@@ -16,6 +16,7 @@ cutoff_frequency = 30  # Adjust the cutoff frequency as needed
 stim = DS8R(mode=1, polarity=1, source=1, demand=40,
             pulse_width=500, dwell=10, recovery=40, enabled=1)
 threshold = -60
+device = "Dev1/ai0"
 x = []
 y = []
 y_mean = []
@@ -73,8 +74,14 @@ def record():
 
     with nidaqmx.Task() as task:
         while True:
+            if all_stop:
+                break
             try:
-                task.ai_channels.add_ai_voltage_chan("Dev1/ai1")
+                device=device_entry.get()
+                task.ai_channels.add_ai_voltage_chan(device)
+                print("Waiting for nidaq")
+                if flag_stop:
+                    break
             except nidaqmx.errors.DaqError as inst:
                 print("Type:", type(inst))  # the exception type
                 print("Arguments:")  # arguments stored in .args
@@ -89,7 +96,11 @@ def record():
             print("go")
             while flag_stop:
                 pass
+                if all_stop:
+                    break
             while not flag_stop:
+                if all_stop:
+                    break
                 data = in_stream.read(number_of_samples_per_channel=8)
                 data_mean = data.mean()
                 belt_value["text"] = data_mean
@@ -117,7 +128,7 @@ def on_closing():
     all_stop = True
     print("stop")
     window.destroy()
-    raise Exception('Close')
+#    raise Exception('Close')
 
 
 def calibrate():
@@ -138,6 +149,13 @@ btn_start.place(x=20, y=20)
 btn_clear = tk.Button(master=window, text="Clear", bg="yellow", activebackground="yellow")
 btn_clear.bind("<Button-1>", clear)
 btn_clear.place(x=60, y=20)
+
+device_label = tk.Label(master=frame1, text="dev#/port")
+device_label.place(x=5, y=60)
+s_device = tk.StringVar()
+device_entry = tk.Entry(master=frame1, textvariable=s_device, )
+device_entry.place(x=80, y=60)
+s_device.set(device)
 
 threshold_label = tk.Label(master=frame1, text="Threshold:")
 threshold_label.place(x=0, y=80)
