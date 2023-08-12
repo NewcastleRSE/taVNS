@@ -39,9 +39,7 @@ def clear(event):
 
 
 def handle_click(event):
-    global flag_stop
-    global threshold
-    global belt_min, belt_max
+    global flag_stop, threshold, belt_min, belt_max
     if btn_start["text"] == "GO":
         print(s_threshold.get())
         belt_max = float("-inf")
