@@ -21,6 +21,8 @@ class Globals:
     flag_stop = True
     belt_max = float("-inf")
     belt_min = float("inf")
+    plot_min = -100
+    plot_max = 100
     belt_value = 0
     stimulating = False
 

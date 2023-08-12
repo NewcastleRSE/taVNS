@@ -52,7 +52,12 @@ class GUI:
         self.btn_start.place(x=20, y=20)
 
         self.btn_clear.bind("<Button-1>", self.clear)
-        self.btn_clear.place(x=60, y=20)
+        self.btn_clear.place(x=80, y=20)
+
+        self.btn_calibrate.bind("<Button-1>", self.calibrate)
+        self.btn_calibrate.place(x=140, y=20)
+
+        self.stim_label.place(x=220, y=20)
 
         self.device_label.place(x=5, y=60)
         self.device_entry.place(x=80, y=60)
@@ -72,13 +77,10 @@ class GUI:
         self.min_label.place(x=0, y=140)
         self.min_value.place(x=100, y=140)
 
-        self.stim_label.place(x = 200, y = 20)
-
         self.figure = plt.Figure(figsize=(6, 5), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.figure)
         self.canvas.get_tk_widget().place(x=0, y=160)
 
-        self.btn_calibrate.bind("<Button-1>", self.calibrate)
         self.daq_recorder.threading()
 
         self.matplotlib_graph()
@@ -127,8 +129,9 @@ class GUI:
         self.global_vars.y_mean.clear()
         self.global_vars.ds8r_stim.clear()
 
-    def calibrate(self):
-        pass
+    def calibrate(self, event):
+        self.global_vars.plot_min = self.global_vars.belt_min
+        self.global_vars.plot_max = self.global_vars.belt_max
 
     def on_closing(self):
         self.global_vars.flag_stop = True

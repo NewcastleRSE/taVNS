@@ -40,7 +40,7 @@ class NiDAQ:
                     data = in_stream.read(number_of_samples_per_channel=8)
                     data_mean = data.mean()
                     # Update GUI with data value
-                    scaled_data = self.global_vars.normalise(data_mean, 1325, 10543, -100, 100)
+                    scaled_data = self.global_vars.normalise(data_mean, self.global_vars.plot_min, self.global_vars.plot_max, -100, 100)
                     self.global_vars.belt_value = scaled_data
                     if scaled_data > self.global_vars.belt_max:
                         self.global_vars.belt_max = scaled_data
