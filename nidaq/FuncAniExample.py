@@ -1,3 +1,8 @@
+# https://coderslegacy.com/python/matplotlib-funcanimation/
+# https://pythonprogramming.net/embedding-live-matplotlib-graph-tkinter-gui/
+# https://stackoverflow.com/questions/457246/what-is-the-best-real-time-plotting-widget-for-wxpython
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
