@@ -6,11 +6,15 @@ from AnimationPlot import AnimationPlot
 
 
 class GUI:
+    default_button_width = 7
+    default_button_height = 1
     window = tk.Tk()
     frame1 = tk.Frame(master=window, width=200, height=100, )
-    btn_start = tk.Button(master=window, text="GO", bg="green", activebackground="#0f0")
-    btn_clear = tk.Button(master=window, text="Clear", bg="yellow", activebackground="yellow")
-    btn_calibrate = tk.Button(master=window, text="Calibrate")
+    btn_start = tk.Button(master=window, text="GO", bg="green", activebackground="#0f0", width=default_button_width,
+                          height=default_button_height)
+    btn_clear = tk.Button(master=window, text="Clear", bg="yellow", activebackground="yellow",
+                          width=default_button_width, height=default_button_height)
+    btn_calibrate = tk.Button(master=window, text="Calibrate", width=default_button_width, height=default_button_height)
     device_label = tk.Label(master=frame1, text="dev#/port")
     belt_value = tk.Label(master=frame1, text="")
     s_device = tk.StringVar()
@@ -23,7 +27,9 @@ class GUI:
     max_value = tk.Label(master=frame1, text="")
     min_label = tk.Label(master=frame1, text="Min belt value:")
     min_value = tk.Label(master=frame1, text="")
-    stim_label = tk.Label(master=frame1, text="No Stim", background="#0f0")
+    stim_label = tk.Label(master=frame1, text="No Stim", background="#0f0", height=default_button_height,
+                          width=default_button_width)
+    nidaq_status_label = tk.Label(master=frame1, text="niDAQ status", background="#f00", height=default_button_height)
     data_list = []
 
     def __init__(self, global_vars, daq_recorder):
@@ -59,6 +65,8 @@ class GUI:
 
         self.stim_label.place(x=220, y=20)
 
+        self.nidaq_status_label.place(x=280, y=20)
+
         self.device_label.place(x=5, y=60)
         self.device_entry.place(x=80, y=60)
         self.s_device.set(self.global_vars.device)
@@ -66,7 +74,7 @@ class GUI:
         self.threshold_label.place(x=0, y=80)
 
         self.threshold_entry.place(x=80, y=80)
-        self.s_threshold.set(str(self.global_vars.threshold))
+        self.s_threshold.set(str(self.global_vars.stimulation_threshold))
 
         self.belt_label.place(x=0, y=100)
         self.belt_value.place(x=40, y=100)
@@ -91,23 +99,28 @@ class GUI:
     def update(self):
         self.max_value["text"] = self.global_vars.belt_max
         self.min_value["text"] = self.global_vars.belt_min
-        self.belt_value["text"] = self.global_vars.belt_value
+        self.belt_value["text"] = self.global_vars.current_belt_value
         self.window.after(500, self.update)
-        if self.global_vars.stimulating:
+        if self.global_vars.is_stimulating:
             self.stim_label["background"] = "#f00"
+            self.stim_label["text"] = "Stim"
         else:
             self.stim_label["background"] = "#0f0"
+            self.stim_label["text"] = "No Stim"
+        if self.global_vars.is_nidaq_active:
+            self.nidaq_status_label["background"] = "#0f0"
+        else:
+            self.nidaq_status_label["background"] = "#f00"
 
     def handle_click(self, event):
-        self.global_vars.device = self.device_entry.get()
         if self.btn_start["text"] == "GO":
-            print(self.s_threshold.get())
+            print("Start recording ...")
             self.global_vars.belt_max = float("-inf")
             self.global_vars.belt_min = float("inf")
             self.max_value["text"] = self.global_vars.belt_max
             self.min_value["text"] = self.global_vars.belt_min
-            print("Start recording")
-            self.global_vars.threshold = float(self.s_threshold.get())
+            self.global_vars.device = self.s_device.get()
+            self.global_vars.stimulation_threshold = float(self.s_threshold.get())
             self.btn_start["text"] = "STOP"
             self.btn_start["bg"] = "red"
             self.btn_start["activebackground"] = "red"
@@ -120,20 +133,38 @@ class GUI:
             self.global_vars.flag_stop = True
 
     def clear(self, event):
+        """Clear parameters: When the clear button is pressed, clear the parameters used for recording and displaying
+        the graph.
+        """
         self.global_vars.belt_max = float("-inf")
         self.global_vars.belt_min = float("inf")
         self.max_value["text"] = self.global_vars.belt_max
-        self.min_value["text"] = self.global_vars.belt_max
-        self.global_vars.x.clear()
-        self.global_vars.y.clear()
-        self.global_vars.y_mean.clear()
-        self.global_vars.ds8r_stim.clear()
+        self.min_value["text"] = self.global_vars.belt_min
+        self.global_vars.recording_time_series.clear()
+        self.global_vars.recording_data_series.clear()
+        self.global_vars.recording_data_mean_series.clear()
+        self.global_vars.stimulation_series.clear()
 
     def calibrate(self, event):
-        self.global_vars.plot_min = self.global_vars.belt_min
-        self.global_vars.plot_max = self.global_vars.belt_max
+        """
+        Normalise graph axes. Set normalisation minimum and maximum values based on actual measured maximum and
+        minimum values.
+        """
+        if self.global_vars.belt_max != float("-Inf"):
+            self.global_vars.plot_min = self.global_vars.belt_min
+            self.global_vars.plot_max = self.global_vars.belt_max
+        else:
+            self.global_vars.plot_min = -100
+            self.global_vars.plot_max = 100
+
+        print("calib", self.global_vars.plot_min)
+        print("calib", self.global_vars.plot_max)
 
     def on_closing(self):
+        """ Closing actions:
+        When the main window is closed, make sure all threads are stopped by setting the appropriate flags monitored
+        by the threads for breaking out.
+        """
         self.global_vars.flag_stop = True
         self.global_vars.all_stop = True
         print("stop")
