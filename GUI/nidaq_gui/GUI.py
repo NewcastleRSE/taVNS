@@ -1,9 +1,10 @@
+from datetime import datetime
 import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 from AnimationPlot import AnimationPlot
-
+import csv
 
 class GUI:
     default_button_width = 7
@@ -15,14 +16,15 @@ class GUI:
     btn_clear = tk.Button(master=window, text="Clear", bg="yellow", activebackground="yellow",
                           width=default_button_width, height=default_button_height)
     btn_calibrate = tk.Button(master=window, text="Calibrate", width=default_button_width, height=default_button_height)
-    device_label = tk.Label(master=frame1, text="dev#/port")
+    btn_save = tk.Button(master=window, text="Save", width=default_button_width, height=default_button_height)
+    device_label = tk.Label(master=frame1, text="Dev#/ai#")
     belt_value = tk.Label(master=frame1, text="")
     s_device = tk.StringVar()
     device_entry = tk.Entry(master=frame1, textvariable=s_device, )
     threshold_label = tk.Label(master=frame1, text="Threshold:")
     s_threshold = tk.StringVar()
     threshold_entry = tk.Entry(master=frame1, textvariable=s_threshold, )
-    belt_label = tk.Label(master=frame1, text="Belt in:")
+    belt_label = tk.Label(master=frame1, text="Belt in (norm):")
     max_label = tk.Label(master=frame1, text="Max belt value:")
     max_value = tk.Label(master=frame1, text="")
     min_label = tk.Label(master=frame1, text="Min belt value:")
@@ -54,7 +56,7 @@ class GUI:
 
         self.frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
-        self.btn_start.bind("<Button-1>", self.handle_click)
+        self.btn_start.bind("<Button-1>", self.go_stop_button)
         self.btn_start.place(x=20, y=20)
 
         self.btn_clear.bind("<Button-1>", self.clear)
@@ -63,11 +65,14 @@ class GUI:
         self.btn_calibrate.bind("<Button-1>", self.calibrate)
         self.btn_calibrate.place(x=140, y=20)
 
-        self.stim_label.place(x=220, y=20)
+        self.btn_save.bind("<Button-1>", self.save)
+        self.btn_save.place(x=200, y=20)
 
-        self.nidaq_status_label.place(x=280, y=20)
+        self.stim_label.place(x=300, y=20)
 
-        self.device_label.place(x=5, y=60)
+        self.nidaq_status_label.place(x=360, y=20)
+
+        self.device_label.place(x=0, y=60)
         self.device_entry.place(x=80, y=60)
         self.s_device.set(self.global_vars.device)
 
@@ -77,7 +82,7 @@ class GUI:
         self.s_threshold.set(str(self.global_vars.stimulation_threshold))
 
         self.belt_label.place(x=0, y=100)
-        self.belt_value.place(x=40, y=100)
+        self.belt_value.place(x=100, y=100)
 
         self.max_label.place(x=0, y=120)
         self.max_value.place(x=100, y=120)
@@ -112,13 +117,13 @@ class GUI:
         else:
             self.nidaq_status_label["background"] = "#f00"
 
-    def handle_click(self, event):
+    def go_stop_button(self, event):
         if self.btn_start["text"] == "GO":
             print("Start recording ...")
-            self.global_vars.belt_max = float("-inf")
-            self.global_vars.belt_min = float("inf")
-            self.max_value["text"] = self.global_vars.belt_max
-            self.min_value["text"] = self.global_vars.belt_min
+            # self.global_vars.belt_max = float("-inf")
+            # self.global_vars.belt_min = float("inf")
+            # self.max_value["text"] = self.global_vars.belt_max
+            # self.min_value["text"] = self.global_vars.belt_min
             self.global_vars.device = self.s_device.get()
             self.global_vars.stimulation_threshold = float(self.s_threshold.get())
             self.btn_start["text"] = "STOP"
@@ -169,3 +174,14 @@ class GUI:
         self.global_vars.all_stop = True
         print("stop")
         self.window.destroy()
+
+    def save(self, event):
+        now = datetime.now()
+        formatted = now.strftime("%Y-%m-%d_%H%M%S")
+        print(formatted)
+        with open(formatted + "_data.csv", 'w') as f:
+            write = csv.writer(f)
+            write.writerow(self.global_vars.recording_time_series)
+            write.writerow(self.global_vars.recording_data_series)
+            write.writerow(self.global_vars.recording_data_mean_series)
+            write.writerow(self.global_vars.stimulation_series)
