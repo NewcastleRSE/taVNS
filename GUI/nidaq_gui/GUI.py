@@ -1,5 +1,6 @@
 from datetime import datetime
 import tkinter as tk
+from tkinter import messagebox
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
@@ -170,6 +171,9 @@ class GUI:
         When the main window is closed, make sure all threads are stopped by setting the appropriate flags monitored
         by the threads for breaking out.
         """
+        answer = tk.messagebox.askokcancel("Question", "Would you like to save before exiting?")
+        if answer:
+            self.save(None)
         self.global_vars.flag_stop = True
         self.global_vars.all_stop = True
         print("stop")
