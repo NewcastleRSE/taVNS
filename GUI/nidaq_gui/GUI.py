@@ -8,6 +8,8 @@ from AnimationPlot import AnimationPlot
 import csv
 
 class GUI:
+    x_default = 20
+    y_default = 20
     default_button_width = 7
     default_button_height = 1
     window = tk.Tk()
@@ -33,6 +35,32 @@ class GUI:
     stim_label = tk.Label(master=frame1, text="No Stim", background="#0f0", height=default_button_height,
                           width=default_button_width)
     nidaq_status_label = tk.Label(master=frame1, text="niDAQ status", background="#f00", height=default_button_height)
+    # STIMULATION PARAMETER WIDGETS
+    ds8r_parameters_label = tk.Label(master=frame1, text="DS8R stimulation parameters:")
+    ds8r_mode_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_mode = tk.StringVar()
+    ds8r_mode_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_polarity_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_polarity = tk.StringVar()
+    ds8r_polarity_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_source_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_source = tk.StringVar()
+    ds8r_source_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_demand_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_demand = tk.StringVar()
+    ds8r_demand_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_pulse_width_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_pulse_width = tk.StringVar()
+    ds8r_pulse_width_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_dwell_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_dwell = tk.StringVar()
+    ds8r_dwell_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_recovery_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_recovery = tk.StringVar()
+    ds8r_recovery_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
+    ds8r_enabled_label = tk.Label(master=frame1, text="Mode:")
+    s_ds8r_enabled = tk.StringVar()
+    ds8r_enabled_entry = tk.Entry(master=frame1, textvariable=s_ds8r_mode)
     data_list = []
 
     def __init__(self, global_vars, daq_recorder):
@@ -58,38 +86,43 @@ class GUI:
         self.frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
         self.btn_start.bind("<Button-1>", self.go_stop_button)
-        self.btn_start.place(x=20, y=20)
+        self.btn_start.place(x=self.x_default, y=self.y_default)
 
         self.btn_clear.bind("<Button-1>", self.clear)
-        self.btn_clear.place(x=80, y=20)
+        self.btn_clear.place(x=self.x_default+60, y=self.y_default)
 
         self.btn_calibrate.bind("<Button-1>", self.calibrate)
-        self.btn_calibrate.place(x=140, y=20)
+        self.btn_calibrate.place(x=self.x_default+120, y=self.y_default)
 
         self.btn_save.bind("<Button-1>", self.save)
-        self.btn_save.place(x=200, y=20)
+        self.btn_save.place(x=self.x_default+180, y=self.y_default)
 
-        self.stim_label.place(x=300, y=20)
+        self.stim_label.place(x=300, y=self.y_default)
 
-        self.nidaq_status_label.place(x=360, y=20)
+        self.nidaq_status_label.place(x=360, y=self.y_default)
 
-        self.device_label.place(x=0, y=60)
-        self.device_entry.place(x=80, y=60)
+        self.device_label.place(x=self.x_default, y=60)
+        self.device_entry.place(x=self.x_default+60, y=60)
         self.s_device.set(self.global_vars.device)
 
-        self.threshold_label.place(x=0, y=80)
+        self.threshold_label.place(x=self.x_default, y=80)
 
-        self.threshold_entry.place(x=80, y=80)
+        self.threshold_entry.place(x=self.x_default+60, y=80)
         self.s_threshold.set(str(self.global_vars.stimulation_threshold))
 
-        self.belt_label.place(x=0, y=100)
-        self.belt_value.place(x=100, y=100)
+        self.belt_label.place(x=self.x_default, y=100)
+        self.belt_value.place(x=self.x_default+80, y=100)
 
-        self.max_label.place(x=0, y=120)
-        self.max_value.place(x=100, y=120)
+        self.max_label.place(x=self.x_default, y=120)
+        self.max_value.place(x=self.x_default+80, y=120)
 
-        self.min_label.place(x=0, y=140)
-        self.min_value.place(x=100, y=140)
+        self.min_label.place(x=self.x_default, y=140)
+        self.min_value.place(x=self.x_default+80, y=140)
+
+        # SET STIMULATION PARAMETERS
+        self.ds8r_parameters_label.place(x=700, y=self.y_default);
+        self.ds8r_mode_label.place(x=700, y=self.y_default+40)
+        self.ds8r_mode_entry.place(x=760, y=self.y_default+40)
 
         self.figure = plt.Figure(figsize=(6, 5), dpi=100)
         self.canvas = FigureCanvasTkAgg(self.figure)
