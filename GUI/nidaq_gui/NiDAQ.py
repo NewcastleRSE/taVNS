@@ -69,14 +69,16 @@ class NiDAQ:
                         # if threshold exceeded then stimulate
                         if scaled_data > self.global_vars.stimulation_threshold:
                             self.global_vars.is_stimulating = True
-                            self.stim_thread() # spool up a stimulation thread
-                            self.global_vars.stimulation_series.append(self.global_vars.stimulation_threshold)
+                            self.stim_thread()  # spool up a stimulation thread
+                            # self.global_vars.stimulation_series.append(self.global_vars.stimulation_threshold)
+                            self.global_vars.recording(data, self.global_vars.stimulation_threshold, 0, data_mean)
                         else:
                             self.global_vars.is_stimulating = False
-                            self.global_vars.stimulation_series.append(0)
-                        self.global_vars.recording_time_series.append(time.time())
-                        self.global_vars.recording_data_series.append(data)
-                        self.global_vars.recording_data_mean_series.append(data_mean)
+                            # self.global_vars.stimulation_series.append(0)
+                            self.global_vars.recording(data, 0, 0, data_mean)
+                        # self.global_vars.recording_time_series.append(time.time())
+                        # self.global_vars.recording_data_series.append(data)
+                        # self.global_vars.recording_data_mean_series.append(data_mean)
                     if len(self.global_vars.recording_data_mean_series) > 0:
                         print("max value: ", max(self.global_vars.recording_data_mean_series))
                         print("min value: ", min(self.global_vars.recording_data_mean_series))
@@ -85,20 +87,23 @@ class NiDAQ:
         print("Spawn recording thread ...")
         t1 = Thread(target=self.record, name="RecordingThread")
         t1.start()
-    
+
     def stimulation(self):
         self.global_vars.stim_ramp()
         stim_cap = 0
         while self.global_vars.is_stimulating:
-            self.global_vars.stim()
-            stim_cap = stim_cap +1
+            self.global_vars.stim.run()
+            self.global_vars.recording_stimulation_demand.append(self.global_vars.demand)
+            stim_cap = stim_cap + 1
+            # if we go over the max number of pulses then stop!
             if stim_cap > self.global_vars.max_stim_count:
                 self.global_vars.warning_msg("Max stim count reached, the device may need recalibrating.")
                 Warning(self.global_vars.warning_msg)
                 break
-                # if we go over the max number of pulses then stop! 
+            if self.global_vars.all_stop:
+                break
 
     def stim_thread(self):
         print("Stimulation triggered")
-        t2 = Thread(target=self.stimulation, name = "Stimulation Thread")
+        t2 = Thread(target=self.stimulation, name="Stimulation Thread")
         t2.start()

@@ -188,4 +188,5 @@ class GUI:
             write.writerow(self.global_vars.recording_time_series)
             write.writerow(self.global_vars.recording_data_series)
             write.writerow(self.global_vars.recording_data_mean_series)
-            write.writerow(self.global_vars.stimulation_series)
+            write.writerow(self.global_vars.recording_stimulation_demand)
+            write.writerow(self.global_vars.recording_stimulation_threshold)
