@@ -16,5 +16,5 @@ plt.plot(stim, label="Stim")
 plt.show()
 
 
-def normalise():
+def normalise(data, min, max):
     pass
