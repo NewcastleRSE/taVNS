@@ -68,8 +68,8 @@ class NiDAQ:
                             self.global_vars.belt_min = self.global_vars.belt_min
                         # if threshold exceeded then stimulate
                         if scaled_data > self.global_vars.stimulation_threshold:
-                            self.global_vars.stim.run()
                             self.global_vars.is_stimulating = True
+                            self.stim_thread() # spool up a stimulation thread
                             self.global_vars.stimulation_series.append(self.global_vars.stimulation_threshold)
                         else:
                             self.global_vars.is_stimulating = False
@@ -85,3 +85,20 @@ class NiDAQ:
         print("Spawn recording thread ...")
         t1 = Thread(target=self.record, name="RecordingThread")
         t1.start()
+    
+    def stimulation(self):
+        self.global_vars.stim_ramp()
+        stim_cap = 0
+        while self.global_vars.is_stimulating:
+            self.global_vars.stim()
+            stim_cap = stim_cap +1
+            if stim_cap > self.global_vars.max_stim_count:
+                self.global_vars.warning_msg("Max stim count reached, the device may need recalibrating.")
+                Warning(self.global_vars.warning_msg)
+                break
+                # if we go over the max number of pulses then stop! 
+
+    def stim_thread(self):
+        print("Stimulation triggered")
+        t2 = Thread(target=self.stimulation, name = "Stimulation Thread")
+        t2.start()
