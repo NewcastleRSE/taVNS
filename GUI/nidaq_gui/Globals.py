@@ -3,6 +3,19 @@ import numpy as np
 import time
 
 
+def normalise(val, data_min, data_max, range_min, range_max):
+    """
+    normalise value within a specified range
+    :param val: the value to be normalised
+    :param data_min: the minimum value of the data series
+    :param data_max: the maximum value of the data series
+    :param range_min: the maximum range value
+    :param range_max: the minimum range value
+    :return: the normalised value
+    """
+    return range_min + ((val - data_min) * (range_max - range_min)) / (data_max - data_min)
+
+
 class Globals:
     run_state = False
     all_stop = False
@@ -45,14 +58,19 @@ class Globals:
     is_nidaq_active = False  # whether the nidaq is switched on or not
 
     def recording(self, data, stimulation_threshold, stimulation_demand, data_mean):
+        """
+        Record data in list
+        :param data: Currently measured data points
+        :param stimulation_threshold: Threshold at which stimulation is applied
+        :param stimulation_demand: The demand (current) applied during stimulation)
+        :param data_mean: The mean of the measured data points to produce one data point
+        :return:
+        """
         self.recording_time_series.append(time.time())
         self.recording_data_series.append(data)
         self.recording_data_mean_series.append(data_mean)
         self.recording_stimulation_demand.append(stimulation_demand)
         self.recording_stimulation_threshold.append(stimulation_threshold)
-
-    def normalise(self, val, min, max, a, b):
-        return a + ((val - min) * (b - a)) / (max - min)
 
     def stim_ramp(self):
         # set up and run a set of stimulations that ramp up to max.
@@ -67,6 +85,7 @@ class Globals:
         pulse_heights = np.linspace(min_demand, self.demand, num_ramps)
         # create the stimulation profiles for the pulses and run
         for ramp_demand in pulse_heights:
+            self.demand = ramp_demand
             stim_ramped = DS8R(mode=self.mode, polarity=self.polarity, source=self.source, demand=round(ramp_demand),
                                pulse_width=self.pulse_width, dwell=self.dwell, recovery=100, enabled=1)
             stim_ramped.run()
