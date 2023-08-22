@@ -119,12 +119,13 @@ class GUI:
             self.nidaq_status_label["background"] = "#f00"
 
     def go_stop_button(self, event):
+        """
+        Toggle switch to start and stop recording
+        :param event:
+        :return:
+        """
         if self.btn_start["text"] == "GO":
             print("Start recording ...")
-            # self.global_vars.belt_max = float("-inf")
-            # self.global_vars.belt_min = float("inf")
-            # self.max_value["text"] = self.global_vars.belt_max
-            # self.min_value["text"] = self.global_vars.belt_min
             self.global_vars.device = self.s_device.get()
             self.global_vars.stimulation_threshold = float(self.s_threshold.get())
             self.btn_start["text"] = "STOP"
@@ -149,7 +150,8 @@ class GUI:
         self.global_vars.recording_time_series.clear()
         self.global_vars.recording_data_series.clear()
         self.global_vars.recording_data_mean_series.clear()
-        self.global_vars.stimulation_series.clear()
+        self.global_vars.recording_stimulation_threshold.clear()
+        self.global_vars.recording_stimulation_demand.clear()
 
     def calibrate(self, event):
         """
@@ -180,6 +182,11 @@ class GUI:
         self.window.destroy()
 
     def save(self, event):
+        """
+        Save recording arrays to csv file
+        :param event:
+        :return:
+        """
         now = datetime.now()
         formatted = now.strftime("%Y-%m-%d_%H%M%S")
         print(formatted)
