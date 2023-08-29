@@ -7,6 +7,7 @@ import matplotlib.animation as animation
 from AnimationPlot import AnimationPlot
 import csv
 
+
 class GUI:
     default_button_width = 7
     default_button_height = 1

@@ -4,7 +4,7 @@ from Globals import normalise
 from datetime import datetime
 
 
-recording = pd.read_csv('2023-08-29_143408_data.csv', header=None)
+recording = pd.read_csv('2023-08-29_154834_data.csv', header=None)
 
 
 data = [float(d) for d in recording.T.iloc[0:, 2]]

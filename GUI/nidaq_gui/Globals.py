@@ -24,6 +24,8 @@ class Globals:
     samples_per_channel = 8
     cutoff_frequency = 30  # Adjust the cutoff frequency as needed
     # stimulation parameters
+    data_point = 0
+    date_point_list = []
     mode = 2
     polarity = 1
     source = 1
@@ -41,7 +43,7 @@ class Globals:
     ramp_time = (pulse_width + dwell) * 8  # give roughly 4 pulses before hitting max?
     max_stim_count = 80
     warning_msg = "Everything is Ok!"
-    device = "Dev1/ai2"
+    device = "Dev1/ai0"
     recording_time_series = []  # timestamp
     recording_data_series = []  # incoming breathing rate
     recording_data_mean_series = []  # mean of 8 data points
@@ -58,7 +60,7 @@ class Globals:
     is_stimulating = False  # whether stimulation is on or not
     # True when the nidaq is switched on and false when detected to be off
     is_nidaq_active = False  # whether the nidaq is switched on or not
-    today = time.time();
+    today = time.time()
 
     def recording(self, data, stimulation_threshold, stimulation_demand, data_mean):
         """
