@@ -28,18 +28,20 @@ class Globals:
     polarity = 1
     source = 1
     demand = 40
-    pulse_width = 500
-    dwell = 10
+    pulse_width = 500  # positive part of pulse
+    recovery = 100  # recovery phase ratio - a percentage, 100% means stim and
+                    # recovery is the same duration and amplitude
+    dwell = 1  # the interval between the positive and negative part of the biphasic pulse
     # set up the default max stimulation
     stim = DS8R(mode, polarity, source, demand,
-                pulse_width, dwell, recovery=100,
+                pulse_width, dwell, recovery=recovery,
                 enabled=1)  # currently not providing the option to change recovery time or enabled.
     stimulation_threshold = 60000
     # stimulation ramping parameters:
     ramp_time = (pulse_width + dwell) * 8  # give roughly 4 pulses before hitting max?
     max_stim_count = 80
     warning_msg = "Everything is Ok!"
-    device = "Dev1/ai0"
+    device = "Dev1/ai2"
     recording_time_series = []  # timestamp
     recording_data_series = []  # incoming breathing rate
     recording_data_mean_series = []  # mean of 8 data points
@@ -56,6 +58,7 @@ class Globals:
     is_stimulating = False  # whether stimulation is on or not
     # True when the nidaq is switched on and false when detected to be off
     is_nidaq_active = False  # whether the nidaq is switched on or not
+    today = time.time();
 
     def recording(self, data, stimulation_threshold, stimulation_demand, data_mean):
         """
@@ -66,28 +69,9 @@ class Globals:
         :param data_mean: The mean of the measured data points to produce one data point
         :return:
         """
-        self.recording_time_series.append(time.time())
+        self.recording_time_series.append(time.time() - self.today)
         self.recording_data_series.append(data)
         self.recording_data_mean_series.append(data_mean)
         self.recording_stimulation_demand.append(stimulation_demand)
         self.recording_stimulation_threshold.append(stimulation_threshold)
 
-    def stim_ramp(self):
-        # set up and run a set of stimulations that ramp up to max.
-        # Once at max will want to switch to just squarewave stims at max
-        # calculate the number of pulses needed to reach max during the given ramptime
-        num_ramps = round(self.ramp_time / ((self.pulse_width * 2) + self.dwell))
-        # calculate the pulse heights in order to have an even gradiated increase in
-        # amplitude for each pulse in the ramp
-        min_demand = self.demand / num_ramps
-        if min_demand < 20:
-            min_demand = 20
-        pulse_heights = np.linspace(min_demand, self.demand, num_ramps)
-        # create the stimulation profiles for the pulses and run
-        for ramp_demand in pulse_heights:
-            self.demand = ramp_demand
-            stim_ramped = DS8R(mode=self.mode, polarity=self.polarity, source=self.source, demand=round(ramp_demand),
-                               pulse_width=self.pulse_width, dwell=self.dwell, recovery=100, enabled=1)
-            stim_ramped.run()
-            if not self.is_stimulating:
-                break
