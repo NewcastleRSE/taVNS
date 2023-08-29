@@ -1,10 +1,12 @@
 # https://github.com/ni/nidaqmx-python
 # https://github.com/CCS-Lab/DS8R_python
+from ds8r import DS8R
 import nidaqmx
 import time
 from threading import *
 import logging
 from Globals import normalise
+import numpy as np
 
 class NiDAQ:
 
@@ -84,11 +86,12 @@ class NiDAQ:
         t1.start()
 
     def stimulation(self):
-        self.global_vars.stim_ramp()
+        self.stim_ramp()
         stim_cap = 0
         while self.global_vars.is_stimulating:
             self.global_vars.stim.run()
             self.global_vars.recording(0, self.global_vars.stimulation_threshold, self.global_vars.demand, 0)
+            # self.global_vars.recording(0, 0, self.global_vars.demand, 0)
             print("Stim demand: " + self.global_vars.demand)
             stim_cap = stim_cap + 1
             # if we go over the max number of pulses then stop!
@@ -103,3 +106,27 @@ class NiDAQ:
         print("Stimulation triggered")
         t2 = Thread(target=self.stimulation, name="Stimulation Thread")
         t2.start()
+
+    def stim_ramp(self):
+        # set up and run a set of stimulations that ramp up to max.
+        # Once at max will want to switch to just squarewave stims at max
+        # calculate the number of pulses needed to reach max during the given ramptime
+        num_ramps = round(self.global_vars.ramp_time / ((self.global_vars.pulse_width * 2) + self.global_vars.dwell))
+        # calculate the pulse heights in order to have an even gradiated increase in
+        # amplitude for each pulse in the ramp
+        min_demand = self.global_vars.demand / num_ramps
+        if min_demand < 20:
+            min_demand = 20
+        max_demand = self.global_vars.demand
+        pulse_heights = np.linspace(min_demand, self.global_vars.demand, num_ramps)
+        print(len(pulse_heights), pulse_heights)
+        # create the stimulation profiles for the pulses and run
+        for ramp_demand in pulse_heights:
+            self.global_vars.demand = ramp_demand
+            stim_ramped = DS8R(mode=self.global_vars.mode, polarity=self.global_vars.polarity, source=self.global_vars.source, demand=round(ramp_demand),
+                               pulse_width=self.global_vars.pulse_width, dwell=self.global_vars.dwell, recovery=100, enabled=1)
+            stim_ramped.run()
+            self.global_vars.recording(0, self.global_vars.stimulation_threshold, self.global_vars.demand, 0)
+            if not self.global_vars.is_stimulating:
+                self.global_vars.demand = max_demand
+                break
