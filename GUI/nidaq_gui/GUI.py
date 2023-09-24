@@ -1,5 +1,6 @@
 from datetime import datetime
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -12,13 +13,22 @@ class GUI:
     default_button_width = 7
     default_button_height = 1
     window = tk.Tk()
-    frame1 = tk.Frame(master=window, width=200, height=100, )
-    btn_start = tk.Button(master=window, text="GO", bg="green", activebackground="#0f0", width=default_button_width,
+    tabControl = ttk.Notebook(window)
+
+    tab1 = ttk.Frame(tabControl)
+    tab2 = ttk.Frame(tabControl)
+
+    tabControl.add(tab1, text='Tab 1')
+    tabControl.add(tab2, text='Tab 2')
+    tabControl.pack(expand=1, fill="both")
+
+    frame1 = tk.Frame(master=tab1, width=200, height=100, )
+    btn_start = tk.Button(master=frame1, text="GO", bg="green", activebackground="#0f0", width=default_button_width,
                           height=default_button_height)
-    btn_clear = tk.Button(master=window, text="Clear", bg="yellow", activebackground="yellow",
+    btn_clear = tk.Button(master=frame1, text="Clear", bg="yellow", activebackground="yellow",
                           width=default_button_width, height=default_button_height)
-    btn_calibrate = tk.Button(master=window, text="Calibrate", width=default_button_width, height=default_button_height)
-    btn_save = tk.Button(master=window, text="Save", width=default_button_width, height=default_button_height)
+    btn_calibrate = tk.Button(master=frame1, text="Calibrate", width=default_button_width, height=default_button_height)
+    btn_save = tk.Button(master=frame1, text="Save", width=default_button_width, height=default_button_height)
     device_label = tk.Label(master=frame1, text="Dev#/ai#")
     belt_value = tk.Label(master=frame1, text="")
     s_device = tk.StringVar()
@@ -93,7 +103,7 @@ class GUI:
         self.min_value.place(x=100, y=140)
 
         self.figure = plt.Figure(figsize=(6, 5), dpi=100)
-        self.canvas = FigureCanvasTkAgg(self.figure)
+        self.canvas = FigureCanvasTkAgg(self.figure, master=self.tab1)
         self.canvas.get_tk_widget().place(x=0, y=160)
 
         self.daq_recorder.threading()
