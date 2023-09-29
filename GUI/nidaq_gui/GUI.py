@@ -7,6 +7,14 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.animation as animation
 from AnimationPlot import AnimationPlot
 import csv
+from ConfigTab import ConfigTab
+
+
+class ConfigTabs(tk.Frame):
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        label = tk.Label(self, text="Some label")
+        label.pack(padx=10, pady=10)
 
 
 class GUI:
@@ -15,14 +23,14 @@ class GUI:
     window = tk.Tk()
     tabControl = ttk.Notebook(window)
 
-    tab1 = ttk.Frame(tabControl)
-    tab2 = ttk.Frame(tabControl)
+    mainTab = ttk.Frame(tabControl)
+    configTab = ConfigTab(tabControl)
 
-    tabControl.add(tab1, text='Tab 1')
-    tabControl.add(tab2, text='Tab 2')
+    tabControl.add(mainTab, text='Tab 1')
+    tabControl.add(configTab, text='Tab 2')
     tabControl.pack(expand=1, fill="both")
 
-    frame1 = tk.Frame(master=tab1, width=200, height=100, )
+    frame1 = tk.Frame(master=mainTab, width=200, height=100, )
     btn_start = tk.Button(master=frame1, text="GO", bg="green", activebackground="#0f0", width=default_button_width,
                           height=default_button_height)
     btn_clear = tk.Button(master=frame1, text="Clear", bg="yellow", activebackground="yellow",
@@ -103,7 +111,7 @@ class GUI:
         self.min_value.place(x=100, y=140)
 
         self.figure = plt.Figure(figsize=(6, 5), dpi=100)
-        self.canvas = FigureCanvasTkAgg(self.figure, master=self.tab1)
+        self.canvas = FigureCanvasTkAgg(self.figure, master=self.mainTab)
         self.canvas.get_tk_widget().place(x=0, y=160)
 
         self.daq_recorder.threading()
@@ -208,3 +216,5 @@ class GUI:
             write.writerow(self.global_vars.recording_data_mean_series)
             write.writerow(self.global_vars.recording_stimulation_demand)
             write.writerow(self.global_vars.recording_stimulation_threshold)
+
+
