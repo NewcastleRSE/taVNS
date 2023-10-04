@@ -1,7 +1,7 @@
 from ds8r import DS8R
 import numpy as np
 import time
-
+from DS8RGlobals import DS8RGlobals
 
 def normalise(val, data_min, data_max, range_min, range_max):
     """
@@ -26,21 +26,12 @@ class Globals:
     # stimulation parameters
     data_point = 0
     date_point_list = []
-    mode = 2
-    polarity = 1
-    source = 1
-    demand = 40
-    pulse_width = 500  # positive part of pulse
-    recovery = 100  # recovery phase ratio - a percentage, 100% means stim and
-                    # recovery is the same duration and amplitude
-    dwell = 1  # the interval between the positive and negative part of the biphasic pulse
-    # set up the default max stimulation
-    stim = DS8R(mode, polarity, source, demand,
-                pulse_width, dwell, recovery=recovery,
-                enabled=1)  # currently not providing the option to change recovery time or enabled.
+    stim = DS8R(DS8RGlobals.ds8r_mode, DS8RGlobals.ds8r_polarity, DS8RGlobals.ds8r_source, DS8RGlobals.ds8r_demand,
+                DS8RGlobals.ds8r_pulse_width, DS8RGlobals.ds8r_dwell, recovery=DS8RGlobals.ds8r_recovery,
+                enabled=DS8RGlobals.ds8r_enabled)
     stimulation_threshold = 60000
     # stimulation ramping parameters:
-    ramp_time = (pulse_width + dwell) * 8  # give roughly 4 pulses before hitting max?
+    ramp_time = (DS8RGlobals.ds8r_pulse_width + DS8RGlobals.ds8r_dwell) * 8  # give roughly 4 pulses before hitting max?
     max_stim_count = 80
     warning_msg = "Everything is Ok!"
     device = "Dev1/ai0"

@@ -24,19 +24,19 @@ class NiDAQ:
                         break
                     try:
                         logging.info('Check NiDAQ ' + self.global_vars.device + ' availability')
-                        self.global_vars.is_nidaq_active = True
                         ai_channel = task.ai_channels.add_ai_voltage_chan(self.global_vars.device)
                         if self.global_vars.flag_stop:
                             break
                     except nidaqmx.errors.DaqError as inst:
+                        self.global_vars.is_nidaq_active = False
                         logging.error("NiDAQ possibly switched off")
                         # print("Type:", type(inst))  # the exception type
                         # print("Arguments:")  # arguments stored in .args
                         # for arg in inst.args:  # unpack args
                         #     print(arg)
-                        self.global_vars.is_nidaq_active = False
                         continue
                     # break
+                self.global_vars.is_nidaq_active = True
                 if self.global_vars.all_stop:
                     logging.info('Close thread on window close')
                     break

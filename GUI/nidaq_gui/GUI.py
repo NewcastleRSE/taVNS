@@ -9,14 +9,6 @@ from AnimationPlot import AnimationPlot
 import csv
 from ConfigTab import ConfigTab
 
-
-class ConfigTabs(tk.Frame):
-    def __init__(self, *args, **kwargs):
-        super().__init__()
-        label = tk.Label(self, text="Some label")
-        label.pack(padx=10, pady=10)
-
-
 class GUI:
     default_button_width = 7
     default_button_height = 1
@@ -26,8 +18,8 @@ class GUI:
     mainTab = ttk.Frame(tabControl)
     configTab = ConfigTab(tabControl)
 
-    tabControl.add(mainTab, text='Tab 1')
-    tabControl.add(configTab, text='Tab 2')
+    tabControl.add(mainTab, text='Main')
+    tabControl.add(configTab, text='DS8R')
     tabControl.pack(expand=1, fill="both")
 
     frame1 = tk.Frame(master=mainTab, width=200, height=100, )
@@ -192,13 +184,16 @@ class GUI:
         When the main window is closed, make sure all threads are stopped by setting the appropriate flags monitored
         by the threads for breaking out.
         """
-        answer = tk.messagebox.askokcancel("Question", "Would you like to save before exiting?")
+        answer = tk.messagebox.askyesno("Question", "Would you like to save before exiting?")
+        print(answer)
         if answer:
             self.save(None)
-        self.global_vars.flag_stop = True
-        self.global_vars.all_stop = True
-        print("stop")
-        self.window.destroy()
+        elif not answer:
+            self.global_vars.flag_stop = True
+            self.global_vars.all_stop = True
+            print("stop")
+            self.window.destroy()
+
 
     def save(self, event):
         """
