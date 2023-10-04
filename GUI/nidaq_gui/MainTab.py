@@ -1,3 +1,5 @@
+import csv
+from datetime import datetime
 import tkinter as tk
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -57,7 +59,7 @@ class MainTab(tk.Frame):
         self.btn_calibrate.bind("<Button-1>", self.calibrate)
         self.btn_calibrate.place(x=140, y=20)
 
-        self.btn_save.bind("<Button-1>", save)
+        self.btn_save.bind("<Button-1>", self.save)
         self.btn_save.place(x=200, y=20)
 
         self.stim_label.place(x=300, y=20)
@@ -163,3 +165,21 @@ class MainTab(tk.Frame):
         realtime_plot.get_plot_format()
         self.ani = animation.FuncAnimation(self.figure, realtime_plot.animate, frames=100,
                                            fargs=[self.data_list, ], interval=200)
+
+    def save(self, event):
+        """
+        Save recording arrays to csv file
+        :param self:
+        :param event:
+        :return:
+        """
+        now = datetime.now()
+        formatted = now.strftime("%Y-%m-%d_%H%M%S")
+        print(formatted)
+        with open(formatted + "_data.csv", 'w') as f:
+            write = csv.writer(f)
+            write.writerow(self.global_vars.recording_time_series)
+            write.writerow(self.global_vars.recording_data_series)
+            write.writerow(self.global_vars.recording_data_mean_series)
+            write.writerow(self.global_vars.recording_stimulation_demand)
+            write.writerow(self.global_vars.recording_stimulation_threshold)
