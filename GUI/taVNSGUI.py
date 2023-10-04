@@ -13,8 +13,7 @@ sampling_rate = 1000  # Change this to match your actual sampling rate
 samples_per_channel = 8
 cutoff_frequency = 30  # Adjust the cutoff frequency as needed
 
-stim = DS8R(mode=1, polarity=1, source=1, demand=40,
-            pulse_width=500, dwell=10, recovery=40, enabled=1)
+stim = DS8R(mode=1, polarity=1, source=1, demand=40, pulse_width=500, dwell=10, recovery=40, enabled=1)
 threshold = -60
 device = "Dev1/ai0"
 x = []
