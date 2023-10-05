@@ -19,6 +19,7 @@ def normalise(val, data_min, data_max, range_min, range_max):
 class Globals:
 
     def __init__(self):
+        self.config_tab = None
         self.run_state = False
         self.all_stop = False
         # Set your DAQ parameters
@@ -35,10 +36,10 @@ class Globals:
         self.recovery = DS8RGlobals.ds8r_recovery
         self.enabled = DS8RGlobals.ds8r_enabled
         self.dwell = DS8RGlobals.ds8r_dwell
-        self.stim = DS8R(DS8RGlobals.ds8r_mode, DS8RGlobals.ds8r_polarity, DS8RGlobals.ds8r_source,
-                         DS8RGlobals.ds8r_demand,
-                         DS8RGlobals.ds8r_pulse_width, DS8RGlobals.ds8r_dwell, recovery=DS8RGlobals.ds8r_recovery,
-                         enabled=DS8RGlobals.ds8r_enabled)
+        # self.stim = DS8R(DS8RGlobals.ds8r_mode, DS8RGlobals.ds8r_polarity, DS8RGlobals.ds8r_source,
+        #                  DS8RGlobals.ds8r_demand,
+        #                  DS8RGlobals.ds8r_pulse_width, DS8RGlobals.ds8r_dwell, recovery=DS8RGlobals.ds8r_recovery,
+        #                  enabled=DS8RGlobals.ds8r_enabled)
         self.stimulation_threshold = 60000
         # stimulation ramping parameters:
         self.ramp_time = (
@@ -64,6 +65,7 @@ class Globals:
         # True when the nidaq is switched on and false when detected to be off
         self.is_nidaq_active = False  # whether the nidaq is switched on or not
         self.today = time.time()
+        self.stim = None # Stimulator(self.config_tab)
 
     def recording(self, data, stimulation_threshold, stimulation_demand, data_mean):
         """
