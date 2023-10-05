@@ -129,9 +129,7 @@ class MainTab(tk.Frame):
         print(event)
         if self.btn_start["text"] == "START RECORDING":
             print("Start recording ...")
-            # self.global_vars.stim = DS8R(self.global_vars.mode, self.global_vars.polarity, self.global_vars.source,
-            #                              self.global_vars.demand, self.global_vars.pulse_width, self.global_vars.dwell,
-            #                              recovery=self.global_vars.recovery, enabled=self.global_vars.enabled)
+            self.global_vars.stimulator.initialise()
             self.entries_state(tk.DISABLED)
             self.global_vars.device = self.s_device.get()
             self.global_vars.stimulation_threshold = float(self.s_threshold.get())
