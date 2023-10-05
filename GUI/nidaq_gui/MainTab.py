@@ -13,18 +13,19 @@ def save():
 
 class MainTab(tk.Frame):
 
-    def __init__(self, tab_control, global_vars, daq_recorder):
+    def __init__(self, tab_control, global_vars, daq_recorder, config_tab):
         super().__init__()
         self.canvas = None
         self.figure = None
         self.ani = None
         self.global_vars = global_vars
         self.daq_recorder = daq_recorder
+        self.config_tab = config_tab
         default_button_width = 7
         default_button_height = 1
         frame1 = tk.Frame(master=self, width=200, height=100, )
-        self.btn_start = tk.Button(master=frame1, text="GO", bg="green", activebackground="#0f0",
-                                   width=default_button_width,
+        self.btn_start = tk.Button(master=frame1, text="START RECORDING", bg="green", activebackground="#0f0",
+                                   width=15,
                                    height=default_button_height)
         self.btn_clear = tk.Button(master=frame1, text="Clear", bg="yellow", activebackground="yellow",
                                    width=default_button_width, height=default_button_height)
@@ -54,17 +55,17 @@ class MainTab(tk.Frame):
         self.btn_start.place(x=20, y=20)
 
         self.btn_clear.bind("<Button-1>", self.clear)
-        self.btn_clear.place(x=80, y=20)
+        self.btn_clear.place(x=140, y=20)
 
         self.btn_calibrate.bind("<Button-1>", self.calibrate)
-        self.btn_calibrate.place(x=140, y=20)
+        self.btn_calibrate.place(x=200, y=20)
 
         self.btn_save.bind("<Button-1>", self.save)
-        self.btn_save.place(x=200, y=20)
+        self.btn_save.place(x=260, y=20)
 
-        self.stim_label.place(x=300, y=20)
+        self.stim_label.place(x=360, y=20)
 
-        self.nidaq_status_label.place(x=360, y=20)
+        self.nidaq_status_label.place(x=420, y=20)
 
         self.device_label.place(x=0, y=60)
         self.device_entry.place(x=80, y=60)
@@ -93,6 +94,16 @@ class MainTab(tk.Frame):
         self.matplotlib_graph()
         self.update_vars()
 
+    def entries_state(self, state):
+        self.config_tab.ds8r_mode_entry.config(state=state)
+        self.config_tab.ds8r_polarity_entry.config(state=state)
+        self.config_tab.ds8r_source_entry.config(state=state)
+        self.config_tab.ds8r_demand_entry.config(state=state)
+        self.config_tab.ds8r_pulse_width_entry.config(state=state)
+        self.config_tab.ds8r_dwell_entry.config(state=state)
+        self.config_tab.ds8r_recovery_entry.config(state=state)
+        self.config_tab.ds8r_enabled_entry.config(state=state)
+
     def update_vars(self):
         self.max_value["text"] = self.global_vars.belt_max
         self.min_value["text"] = self.global_vars.belt_min
@@ -115,17 +126,23 @@ class MainTab(tk.Frame):
         :param event:
         :return:
         """
-        if self.btn_start["text"] == "GO":
+        print(event)
+        if self.btn_start["text"] == "START RECORDING":
             print("Start recording ...")
+            # self.global_vars.stim = DS8R(self.global_vars.mode, self.global_vars.polarity, self.global_vars.source,
+            #                              self.global_vars.demand, self.global_vars.pulse_width, self.global_vars.dwell,
+            #                              recovery=self.global_vars.recovery, enabled=self.global_vars.enabled)
+            self.entries_state(tk.DISABLED)
             self.global_vars.device = self.s_device.get()
             self.global_vars.stimulation_threshold = float(self.s_threshold.get())
-            self.btn_start["text"] = "STOP"
+            self.btn_start["text"] = "STOP RECORDING"
             self.btn_start["bg"] = "red"
             self.btn_start["activebackground"] = "red"
             self.global_vars.flag_stop = False
         else:
             print("Stop recording ...")
-            self.btn_start["text"] = "GO"
+            self.entries_state(tk.NORMAL)
+            self.btn_start["text"] = "START RECORDING"
             self.btn_start["bg"] = "green"
             self.btn_start["activebackground"] = "green"
             self.global_vars.flag_stop = True

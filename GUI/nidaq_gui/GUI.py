@@ -13,10 +13,10 @@ class GUI:
     def __init__(self, global_vars, daq_recorder):
         self.global_vars = global_vars
         tab_control = ttk.Notebook(self.window)
-        self.main_tab = MainTab(tab_control, global_vars, daq_recorder)
-        config_tab = ConfigTab(tab_control)
+        self.config_tab = ConfigTab(tab_control, global_vars)
+        self.main_tab = MainTab(tab_control, global_vars, daq_recorder, self.config_tab)
         tab_control.add(self.main_tab, text='Main')
-        tab_control.add(config_tab, text='DS8R')
+        tab_control.add(self.config_tab, text='DS8R')
         tab_control.pack(expand=1, fill="both")
         self.create_gui()
 
