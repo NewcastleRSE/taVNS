@@ -13,7 +13,8 @@ class AnimationPlot:
             data_list[1].append(data * 0.5)  # Add to the list holding the fixed number of points to animate
         except:  # Pass if data point is bad
             pass
-        data_list = data_list[-100:]  # Fix the list size so that the animation plot 'window' is x number of points
+        data_list[0] = data_list[0][-100:]  # Fix the list size so that the animation plot 'window' is x number of points
+        data_list[1] = data_list[1][-100:]  # Fix the list size so that the animation plot 'window' is x number of points
         self.ax.clear()  # Clear last data frame
         self.get_plot_format()
         self.ax.plot(data_list[0])  # Plot new data frame

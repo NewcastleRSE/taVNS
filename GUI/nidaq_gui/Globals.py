@@ -36,14 +36,10 @@ class Globals:
         self.recovery = DS8RGlobals.ds8r_recovery
         self.enabled = DS8RGlobals.ds8r_enabled
         self.dwell = DS8RGlobals.ds8r_dwell
-        # self.stim = DS8R(DS8RGlobals.ds8r_mode, DS8RGlobals.ds8r_polarity, DS8RGlobals.ds8r_source,
-        #                  DS8RGlobals.ds8r_demand,
-        #                  DS8RGlobals.ds8r_pulse_width, DS8RGlobals.ds8r_dwell, recovery=DS8RGlobals.ds8r_recovery,
-        #                  enabled=DS8RGlobals.ds8r_enabled)
         self.stimulation_threshold = 60000
         # stimulation ramping parameters:
-        self.ramp_time = (
-                                     DS8RGlobals.ds8r_pulse_width + DS8RGlobals.ds8r_dwell) * 8  # give roughly 4 pulses before hitting max?
+        # give roughly 4 pulses before hitting max?
+        self.ramp_time = (DS8RGlobals.ds8r_pulse_width + DS8RGlobals.ds8r_dwell) * 8
         self.pulse_width = DS8RGlobals.ds8r_pulse_width
         self.max_stim_count = 80
         self.warning_msg = "Everything is Ok!"
