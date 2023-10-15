@@ -13,13 +13,13 @@ def save():
 
 class MainTab(tk.Frame):
 
-    def __init__(self, tab_control, global_vars, daq_recorder, config_tab):
+    def __init__(self, tab_control, global_vars, daq, config_tab):
         super().__init__()
         self.canvas = None
         self.figure = None
         self.ani = None
         self.global_vars = global_vars
-        self.daq_recorder = daq_recorder
+        self.daq = daq
         self.config_tab = config_tab
         default_button_width = 7
         default_button_height = 1
@@ -48,7 +48,7 @@ class MainTab(tk.Frame):
                                    width=default_button_width)
         self.nidaq_status_label = tk.Label(master=frame1, text="niDAQ status", background="#f00",
                                            height=default_button_height)
-        self.data_list = []
+        self.data_list = [[], []]
         frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
         self.btn_start.bind("<Button-1>", self.go_stop_button)
@@ -89,7 +89,7 @@ class MainTab(tk.Frame):
         self.canvas = FigureCanvasTkAgg(self.figure, master=self)
         self.canvas.get_tk_widget().place(x=0, y=160)
 
-        self.daq_recorder.threading()
+        self.daq.threading()
 
         self.matplotlib_graph()
         self.update_vars()
