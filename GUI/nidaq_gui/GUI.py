@@ -12,11 +12,11 @@ class GUI:
     window = tk.Tk()
     main_tab = None
 
-    def __init__(self, global_vars: Globals, daq_recorder: NiDAQ):
+    def __init__(self, global_vars: Globals, daq: NiDAQ):
         self.global_vars = global_vars
         tab_control = ttk.Notebook(self.window)
         self.config_tab = ConfigTab(tab_control, global_vars)
-        self.main_tab = MainTab(tab_control, global_vars, daq_recorder, self.config_tab)
+        self.main_tab = MainTab(tab_control, global_vars, daq, self.config_tab)
         self.global_vars.config_tab = self.config_tab
         tab_control.add(self.main_tab, text='Main')
         tab_control.add(self.config_tab, text='DS8R')
