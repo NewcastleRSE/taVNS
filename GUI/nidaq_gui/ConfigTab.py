@@ -20,57 +20,57 @@ class ConfigTab(tk.Frame):
         # STIMULATION PARAMETER WIDGETS
         self.ds8r_mode_label = tk.Label(self, text="Mode:", fg="#0D6519")
         self.s_ds8r_mode = tk.StringVar()
+        self.s_ds8r_polarity = tk.StringVar()
+        self.s_ds8r_source = tk.StringVar()
+        self.s_ds8r_demand = tk.StringVar()
+        self.s_ds8r_pulse_width = tk.StringVar()
+        self.s_ds8r_dwell = tk.StringVar()
+        self.s_ds8r_recovery = tk.StringVar()
+        self.s_ds8r_enabled = tk.StringVar()
         self.s_ds8r_mode.set(str(DS8RGlobals.ds8r_mode))
+        self.s_ds8r_polarity.set(str(DS8RGlobals.ds8r_polarity))
+        self.s_ds8r_source.set(str(DS8RGlobals.ds8r_source))
+        self.s_ds8r_demand.set(str(DS8RGlobals.ds8r_demand))
+        self.s_ds8r_pulse_width.set(str(DS8RGlobals.ds8r_pulse_width))
+        self.s_ds8r_dwell.set(str(DS8RGlobals.ds8r_dwell))
+        self.s_ds8r_recovery.set(str(DS8RGlobals.ds8r_recovery))
+        self.s_ds8r_enabled.set(str(DS8RGlobals.ds8r_enabled))
         self.ds8r_mode_entry = tk.Entry(self, textvariable=self.s_ds8r_mode, validate="focusout",
                                         validatecommand=lambda:
                                         self.change_colour(self.ds8r_mode_label, self.s_ds8r_mode,
                                                            DS8RGlobals.ds8r_mode, 0))
         self.ds8r_polarity_label = tk.Label(self, text="Polarity:", fg="#0D6519")
-        self.s_ds8r_polarity = tk.StringVar()
-        self.s_ds8r_polarity.set(str(DS8RGlobals.ds8r_polarity))
         self.ds8r_polarity_entry = tk.Entry(self, textvariable=self.s_ds8r_polarity, validate="focusout",
                                             validatecommand=lambda:
                                             self.change_colour(self.ds8r_polarity_label, self.s_ds8r_polarity,
                                                                DS8RGlobals.ds8r_polarity, 1))
         self.ds8r_source_label = tk.Label(self, text="Source:", fg="#0D6519")
-        self.s_ds8r_source = tk.StringVar()
-        self.s_ds8r_source.set(str(DS8RGlobals.ds8r_source))
         self.ds8r_source_entry = tk.Entry(self, textvariable=self.s_ds8r_source, validate="focusout",
                                           validatecommand=
                                           lambda: self.change_colour(self.ds8r_mode_label, self.s_ds8r_source,
                                                                      DS8RGlobals.ds8r_source, 2))
         self.ds8r_demand_label = tk.Label(self, text="Demand:", fg="#0D6519")
-        self.s_ds8r_demand = tk.StringVar()
-        self.s_ds8r_demand.set(str(DS8RGlobals.ds8r_demand))
         self.ds8r_demand_entry = tk.Entry(self, textvariable=self.s_ds8r_demand, validate="focusout",
                                           validatecommand=
                                           lambda: self.change_colour(self.ds8r_demand_label, self.s_ds8r_demand,
                                                                      DS8RGlobals.ds8r_demand, 3))
         self.ds8r_pulse_width_label = tk.Label(self, text="Pulse Width:", fg="#0D6519")
-        self.s_ds8r_pulse_width = tk.StringVar()
-        self.s_ds8r_pulse_width.set(str(DS8RGlobals.ds8r_pulse_width))
         self.ds8r_pulse_width_entry = tk.Entry(self, textvariable=self.s_ds8r_pulse_width, validate="focusout",
                                                validatecommand=
                                                lambda: self.change_colour(self.ds8r_pulse_width_label,
                                                                           self.s_ds8r_pulse_width,
                                                                           DS8RGlobals.ds8r_pulse_width, 4))
         self.ds8r_dwell_label = tk.Label(self, text="Dwell:", fg="#0D6519")
-        self.s_ds8r_dwell = tk.StringVar()
-        self.s_ds8r_dwell.set(str(DS8RGlobals.ds8r_dwell))
         self.ds8r_dwell_entry = tk.Entry(self, textvariable=self.s_ds8r_dwell, validate="focusout",
                                          validatecommand=
                                          lambda: self.change_colour(self.ds8r_dwell_label, self.s_ds8r_dwell,
                                                                     DS8RGlobals.ds8r_dwell, 5))
         self.ds8r_recovery_label = tk.Label(self, text="Recovery:", fg="#0D6519")
-        self.s_ds8r_recovery = tk.StringVar()
-        self.s_ds8r_recovery.set(str(DS8RGlobals.ds8r_recovery))
         self.ds8r_recovery_entry = tk.Entry(self, textvariable=self.s_ds8r_recovery, validate="focusout",
                                             validatecommand=
                                             lambda: self.change_colour(self.ds8r_recovery_label, self.s_ds8r_recovery,
                                                                        DS8RGlobals.ds8r_recovery, 6))
         self.ds8r_enabled_label = tk.Label(self, text="Enabled:", fg="#0D6519")
-        self.s_ds8r_enabled = tk.StringVar()
-        self.s_ds8r_enabled.set(str(DS8RGlobals.ds8r_enabled))
         self.ds8r_enabled_entry = tk.Entry(self, textvariable=self.s_ds8r_enabled, validate="focusout",
                                            validatecommand=
                                            lambda: self.change_colour(self.ds8r_enabled_label, self.s_ds8r_enabled,
