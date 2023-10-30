@@ -43,7 +43,7 @@ class Globals:
         self.pulse_width = DS8RGlobals.ds8r_pulse_width
         self.max_stim_count = 80
         self.warning_msg = "Everything is Ok!"
-        self.device = "Dev1/ai0"
+        self.device = ["Dev1/ai0", "Dev1/ai1", "Dev1/ai2"]
         self.recording_time_series = []  # timestamp
         self.recording_data_series = []  # incoming breathing rate
         self.recording_data_mean_series = []  # mean of 8 data points

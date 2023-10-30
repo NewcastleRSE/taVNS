@@ -23,8 +23,10 @@ class NiDAQ:
                         logging.info('Close thread on window close')
                         break
                     try:
-                        logging.info('Check NiDAQ ' + self.global_vars.device + ' availability')
-                        ai_channel = task.ai_channels.add_ai_voltage_chan(self.global_vars.device)
+                        logging.info('Check NiDAQ ' + self.global_vars.device[0] + ' availability')
+                        ai_channel = [task.ai_channels.add_ai_voltage_chan(self.global_vars.device[0]),
+                                      task.ai_channels.add_ai_voltage_chan(self.global_vars.device[1]),
+                                      task.ai_channels.add_ai_voltage_chan(self.global_vars.device[2])]
                         if self.global_vars.flag_stop:
                             break
                     except nidaqmx.errors.DaqError as inst:
