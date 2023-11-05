@@ -48,6 +48,8 @@ Using code from the CCS-Lab DS8R\_python repository (https://github.com/CCS-Lab/
 
 ### Prerequisites
 
+- Python 3.10
+- python3-venv
 - Digistim DS8R
 - AD Instruments PowerLab 4/26
 - NI USB6229
