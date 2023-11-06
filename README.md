@@ -65,7 +65,8 @@ pip install -e git+https://github.com/CCS-Lab/DS8R_python#egg=ds8r
 
 ### Running Locally
 
-How to run the application on your local system.
+This application is best run in a virtual environment such as `venv`. Make sure **Python 3**, **pip** and **venv**
+are installed
 
 ### Running Tests
 
@@ -105,6 +106,14 @@ A branch per feature being worked on.
 
 https://nvie.com/posts/a-successful-git-branching-model/
 
+## Program Structure
+
+```mermaid
+    C4Context
+      title GUI for DAQ recordings
+
+```
+
 ## License
 
 ## Citation
@@ -123,3 +132,6 @@ Please cite the associated papers for this work if you use this code:
 
 ## Acknowledgements
 This work was funded by a grant from the UK Research Councils, EPSRC grant ref. EP/L012345/1, “Example project title, please update”.
+
+
+
