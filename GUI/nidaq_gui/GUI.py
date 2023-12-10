@@ -5,7 +5,6 @@ from ConfigTab import ConfigTab
 from MainTab import MainTab
 from Globals import *
 from NiDAQ import *
-from Stimulator import Stimulator
 
 
 class GUI:
@@ -21,7 +20,6 @@ class GUI:
         tab_control.add(self.main_tab, text='Main')
         tab_control.add(self.config_tab, text='DS8R')
         tab_control.pack(expand=1, fill="both")
-        self.global_vars.stimulator = Stimulator(global_vars)
         self.create_gui()
 
     def create_gui(self):

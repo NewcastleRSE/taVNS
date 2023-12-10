@@ -9,12 +9,14 @@ y = [0] * 20
 
 bars = ax.bar(x, y, color="blue")
 ax.axis([0, 20, 0, 10])  # x-axis from 0 to 20
-                         # y-axis from 0 to 10
+
+
+# y-axis from 0 to 10
 
 def update(frame):
     data = in_stream.read(number_of_samples_per_channel=1)
-    data = data/1000
-    y[frame] = int(data) #np.random.randint(0, 10)
+    data = data / 1000
+    y[frame] = int(data)  # np.random.randint(0, 10)
     bars[frame].set_height(y[frame])
 
 

@@ -129,7 +129,6 @@ class MainTab(tk.Frame):
         print(event)
         if self.btn_start["text"] == "START RECORDING":
             print("Start recording ...")
-            self.global_vars.stimulator.initialise()
             self.entries_state(tk.DISABLED)
             self.global_vars.device = self.s_device.get()
             self.global_vars.stimulation_threshold = float(self.s_threshold.get())
